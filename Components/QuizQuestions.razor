@@ -1,0 +1,92 @@
+﻿@using Microsoft.AspNetCore.WebUtilities
+@using QuizApp.Models;
+@inject NavigationManager NavManager
+
+@if (questionsCount >= 1 & questionShowing <= questionsCount)
+{
+    <div>
+        @{
+            string formName = $@"{quiz.Title}-question-{questionShowing}";
+            string rg_qName = $@"{quiz.Title}-question-{questionShowing}-optiongroup";
+            string qOptionNameShort = $@"{quiz.Title.ToLower()}-q{questionShowing}";
+            string qOptionNameLong = $@"{quiz.Title} Question {questionShowing}";
+            string qAnswer = $@"{quiz.Questions[(int)questionShowing - 1].AnswerStr}";
+        }
+        @* <form method="post" @onsubmit="CheckAnswer" @formname="@formName"> *@
+        <form @formname="@formName">
+            <fieldset>
+                <legend>@qOptionNameLong</legend>
+                <p>@quiz.Questions[(int)questionShowing - 1].QuestionStr</p>
+                <InputRadioGroup @bind-Value="answerSelection">
+                @{
+                    foreach (string option in @quiz.Questions[(int)questionShowing - 1].Options)
+                        {
+                            <label>
+                                <InputRadio Value="@option" />
+                                @option
+                            </label><br />
+                        }
+                    }
+                    </InputRadioGroup>
+            </fieldset>
+        </form>
+        @if (checkingAnswer & wrongAnswer)
+        {
+            <p>No, that answer is incorrect.</p>
+        }
+        @if (checkingAnswer & !wrongAnswer)
+        {
+            <p>That is the correct answer!<br /></p>
+        }
+        <button type="button" class="btn btn-secondary" @onclick="CheckAnswer">Check Answer</button>
+        @if (questionShowing < questionsCount)
+        {
+            <button class="btn btn-primary" @onclick="NextQuestion">Next</button>
+        }
+    </div>
+}
+
+@code {
+    private uint questionShowing = 1;
+    private uint questionsCount;
+    private string? quizName = string.Empty;
+    private Quiz quiz;
+    private string? answerSelection { get; set; }
+    private bool checkingAnswer = false;
+    private bool wrongAnswer = true;
+
+    private void NextQuestion()
+    {
+        questionShowing++;
+        checkingAnswer = false;
+        wrongAnswer = true;
+    }
+
+    private void CheckAnswer()
+    {
+        if (answerSelection == quiz.Questions[(int)questionShowing - 1].AnswerStr)
+        {
+            wrongAnswer = false;
+        }
+        else
+        {
+            wrongAnswer = true;
+        }
+        checkingAnswer = true;
+        Console.WriteLine($"Form selection is: {answerSelection}");
+    }
+
+    protected override void OnInitialized()
+    {
+        //Source: https://chrissainty.com/working-with-query-strings-in-blazor/
+        //11/1/2024 by Robert Howell
+        System.Uri uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("quiz", out var _initialCount))
+        {
+            quizName = _initialCount;
+        }
+
+        quiz = QuizOperations.GetQuiz(quizName);
+        questionsCount = (uint)quiz.Questions.Count;
+    }
+}

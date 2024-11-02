@@ -1,0 +1,30 @@
+﻿#QuizMain {
+    background-color: blanchedalmond;
+    height: 100%
+}
+
+#QuizMenu {
+    padding: 0;
+    margin: 4em 0;
+}
+
+#QuizMenu li {
+    list-style: none;
+    border-radius: 1em;
+    background-color: lightgray;
+    margin: 1em 1em;
+    padding: 1em 0;
+}
+
+#QuizMenu li div.Option {
+    display: inline-block;
+    background-color: yellow;
+    height: 100% !important;
+    width: 40px;
+    margin: 0 2em;
+    border-radius: .5em;
+}
+
+#QuizMenu li span {
+    padding: 2em 0;
+}

@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-QuizApp-28331ffe-3178-4458-ba40-72ee2080d274</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" NoWarn="NU1605" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.8" NoWarn="NU1605" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="2.19.1" />
+    <PackageReference Include="Microsoft.Identity.Web.UI" Version="2.19.1" />
+    <PackageReference Include="Microsoft.Identity.Web.DownstreamApi" Version="2.15.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\images\favicon-32x32.png" />
+    <None Include="wwwroot\assets\images\icon-accessibility.svg" />
+    <None Include="wwwroot\assets\images\icon-correct.svg" />
+    <None Include="wwwroot\assets\images\icon-css.svg" />
+    <None Include="wwwroot\assets\images\icon-error.svg" />
+    <None Include="wwwroot\assets\images\icon-html.svg" />
+    <None Include="wwwroot\assets\images\icon-incorrect.svg" />
+    <None Include="wwwroot\assets\images\icon-js.svg" />
+    <None Include="wwwroot\assets\images\icon-moon-dark.svg" />
+    <None Include="wwwroot\assets\images\icon-moon-light.svg" />
+    <None Include="wwwroot\assets\images\icon-sun-dark.svg" />
+    <None Include="wwwroot\assets\images\icon-sun-light.svg" />
+    <None Include="wwwroot\assets\images\pattern-background-desktop-dark.svg" />
+    <None Include="wwwroot\assets\images\pattern-background-desktop-light.svg" />
+    <None Include="wwwroot\assets\images\pattern-background-mobile-dark.svg" />
+    <None Include="wwwroot\assets\images\pattern-background-mobile-light.svg" />
+    <None Include="wwwroot\assets\images\pattern-background-tablet-dark.svg" />
+    <None Include="wwwroot\assets\images\pattern-background-tablet-light.svg" />
+  </ItemGroup>
+
+</Project>

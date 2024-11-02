@@ -1,0 +1,13 @@
+﻿@model QuizApp.Models.QuizOverview;
+@using QuizApp.Components
+
+@{
+    ViewData["Title"] = "Questions";
+}
+
+<img src=".@Model.IconPath" alt="@Model.Title FEM icon." />
+<h1>@Model.Title</h1>
+
+<section>
+    <component type="typeof(QuizQuestions)" render-mode="ServerPrerendered" />
+</section>
