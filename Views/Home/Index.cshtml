@@ -1,11 +1,9 @@
-﻿@*
+﻿@model QuizApp.Models.QuizzesOverview;
+
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @* <div id="QuizMain" class="container"> *@
-
-@{
-    QuizData Data = QuizOperations.GetQuizData();
-}
 
 <div id="QuizMain" class="pb-3">
 <!-- Quiz menu start -->
@@ -13,14 +11,14 @@
   <i>Pick a subject to get started.</i>
 
   <ul id="QuizMenu">
-      @foreach (Quiz quiz in Data.Quizzes)
+      @foreach (QuizOverview quiz in Model.Quizzes)
       {
         <li>
                 <a asp-area="" asp-controller="Quiz" asp-action="Questions" asp-route-quiz="@quiz.Title">
                 <div class="Option">
                     <img src=".@quiz.IconPath" alt="@quiz.Title FEM icon." />
                 </div>
-                <span>@quiz.Title</span>
+                    <span>@quiz.Title</span>
             </a>
         </li>
       }

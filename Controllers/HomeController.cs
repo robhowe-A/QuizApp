@@ -10,7 +10,16 @@ namespace QuizApp.Controllers
         // GET: Quiz/Menu
         public ActionResult Index()
         {
-            return View();
+            //Start by fetching asset data
+            QuizData Data = QuizOperations.GetData();
+
+            //Only the quiz overview information is needed, so refine it
+            QuizzesOverview QuizzesOverviews = QuizOperations.GetData(Data.Quizzes);
+
+            //Quiz asset data is not needed any longer, so dispose of it
+            Data.Dispose();
+
+            return View(QuizzesOverviews);
         }
 
         public ActionResult Attribution()
