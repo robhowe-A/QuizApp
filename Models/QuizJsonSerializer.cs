@@ -101,7 +101,6 @@ namespace ArticleJsonFetch.Models
             }
         }
 
-
         private void WriteExceptionToConsole(Exception e)
         {
             if (e.InnerException == null)
@@ -109,5 +108,6 @@ namespace ArticleJsonFetch.Models
             else
                 Console.WriteLine("Exception: {0}\n{1}\n{2}", e.ToString(), e.StackTrace, e.InnerException);
         }
+
     }
 }

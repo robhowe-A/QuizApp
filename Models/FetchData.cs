@@ -1,7 +1,7 @@
 ﻿using ArticleJsonFetch.Models;
-using System.Linq.Expressions;
+using QuizApp.Models;
 
-namespace QuizApp.Models
+namespace QuizApp.Controllers
 {
     internal sealed class FetchData
     {
@@ -83,5 +83,6 @@ namespace QuizApp.Models
             else
                 Console.WriteLine("Exception: {0}\n{1}\n{2}", e.ToString(), e.StackTrace, e.InnerException);
         }
+
     }
 }

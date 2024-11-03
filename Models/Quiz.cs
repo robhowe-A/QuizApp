@@ -1,8 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Azure;
-using NuGet.Packaging;
-using System.Collections;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace QuizApp.Models
 {
@@ -39,6 +35,7 @@ namespace QuizApp.Models
             Dispose(disposing: false);
             Console.WriteLine("Destructor called."); 
         }
+
     }
 
     public class Quiz : IDisposable
@@ -80,6 +77,7 @@ namespace QuizApp.Models
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: false);
         }
+
     }
 
     public class Question
@@ -92,13 +90,17 @@ namespace QuizApp.Models
         
         [JsonPropertyName("answer")]
         public string AnswerStr { get; set; } = string.Empty;
+
     }
 
     public class QuestionSelection
     {
         public string? qName { get; set; }
+
         public string? qAnswer { get; set; }
+
         public string? id { get; set; }
+
     }
 
     public class QuizzesOverview
@@ -109,11 +111,13 @@ namespace QuizApp.Models
         {
             Quizzes = quizzes;
         }
+
     }
 
     public class QuizOverview
     {
         public string Title { get; set; } = string.Empty;
+
         public string IconPath { get; set; } = string.Empty;
 
         public QuizOverview(Quiz quiz)
@@ -121,80 +125,6 @@ namespace QuizApp.Models
             Title = quiz.Title;
             IconPath = quiz.IconPath;
         }
-    }
 
-    public static class QuizOperations
-    {
-        public static QuizData GetData()
-        {
-            const string QuizDataFilePath = "./assets/data.json";
-
-            //Can be any method of getting data
-            FetchData fetchData = new FetchData();
-            QuizData? dataFetch = fetchData.GetFromFileToJson(QuizDataFilePath);
-
-            if (dataFetch == null) throw new InvalidDataException("Invalid data. Check data fetch from file.");
-            
-            //Can validate quiz data, is TODO
-
-            QuizData Data = dataFetch;
-
-            return Data;
-        }
-
-        public static QuizzesOverview GetData(ref List<Quiz> quizzes)
-        {
-            if (quizzes == null) { throw new ArgumentNullException(); }
-
-            List<QuizOverview> quizzesOverviews = new List<QuizOverview>();
-
-            //Find and return the quiz model
-            foreach (Quiz quiz in quizzes)
-            {
-                QuizOverview qOverview = new QuizOverview(quiz);
-                quizzesOverviews.Add(qOverview);
-            }
-            QuizzesOverview quizzesOverview = new QuizzesOverview(quizzesOverviews);
-
-
-            return quizzesOverview;
-        }
-
-        public static List<string> GetQuizNames()
-        {
-            List<string> Names = new List<string>();
-
-            var Data = GetData();
-            foreach (var name in Data.Quizzes)
-            {
-                Names.Add(name.Title);
-            }
-
-            return Names;
-        }
-
-        public static Quiz GetQuiz(string match)
-        {
-            if (match == null) { throw new ArgumentNullException(); }
-            //Find and return the quiz model
-            QuizData Data = QuizOperations.GetData();
-            var QuizChoice = Data.Quizzes.Find(name => name.Title.Equals(match));
-            Data.Dispose();
-
-            return QuizChoice;
-        }
-
-        public static QuizOverview GetQuiz(Quiz quiz)
-        {
-            if (quiz == null) { throw new ArgumentNullException(); }
-
-            //Find and return the quiz model
-            QuizData Data = QuizOperations.GetData();
-            var QuizChoice = Data.Quizzes.Find(name => name.Title.Equals(quiz));
-            Data.Dispose();
-
-            QuizOverview qOverview = new QuizOverview(QuizChoice);
-            return qOverview;
-        }
     }
 }

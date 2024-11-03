@@ -1,10 +1,46 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using QuizApp.Models;
-using System;
 
 namespace QuizApp.Controllers
 {
+    public static partial class QuizOperations
+    {
+        public static QuizData GetData()
+        {
+            const string QuizDataFilePath = "./assets/data.json";
+
+            //Can be any method of getting data
+            FetchData fetchData = new FetchData();
+            QuizData? dataFetch = fetchData.GetFromFileToJson(QuizDataFilePath);
+
+            if (dataFetch == null) throw new InvalidDataException("Invalid data. Check data fetch from file.");
+
+            //Can validate quiz data, is TODO
+
+            QuizData Data = dataFetch;
+
+            return Data;
+        }
+
+        public static QuizzesOverview GetData(ref List<Quiz> quizzes)
+        {
+            if (quizzes == null) { throw new ArgumentNullException(); }
+
+            List<QuizOverview> quizzesOverviews = new List<QuizOverview>();
+
+            //Find and return the quiz model
+            foreach (Quiz quiz in quizzes)
+            {
+                QuizOverview qOverview = new QuizOverview(quiz);
+                quizzesOverviews.Add(qOverview);
+            }
+            QuizzesOverview quizzesOverview = new QuizzesOverview(quizzesOverviews);
+
+            return quizzesOverview;
+        }
+
+    }
+
     public class HomeController : Controller
     {
         // GET: Home/Index
@@ -30,5 +66,6 @@ namespace QuizApp.Controllers
         {
             return View();
         }
+
     }
 }
