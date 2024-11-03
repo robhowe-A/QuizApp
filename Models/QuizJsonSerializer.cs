@@ -14,17 +14,20 @@ namespace ArticleJsonFetch.Models
         {
         }
 
-        public void DeserializeToJson(ref string str)
+        public void DeserializeToJson(ref readonly string str, out object? obj)
         {
+            obj = null;
             if (string.IsNullOrWhiteSpace(str)) { return; }
 
             try
             {
                 obj = System.Text.Json.JsonSerializer.Deserialize<object>(str)!;
-                if (obj != null)
+                if (this.obj != null)
                 {
                     isJson = true;
+                    obj = this.obj;
                 }
+                else obj = null;
             }
             catch (ArgumentNullException ex)
             {
@@ -40,17 +43,20 @@ namespace ArticleJsonFetch.Models
             }
         }
 
-        public void DeserializeToJson(ref FileStream stream)
+        public void DeserializeToJson(ref readonly FileStream stream, out object? obj)
         {
+            obj = null;
             if (FileStream.Equals(stream, null)) { return; }
 
             try
             {
-                obj = System.Text.Json.JsonSerializer.Deserialize<object>(stream)!;
-                if (obj != null)
+                this.obj = System.Text.Json.JsonSerializer.Deserialize<object>(stream)!;
+                if (this.obj != null)
                 {
                     isJson = true;
+                    obj = this.obj;
                 }
+                else obj = null;
             }
             catch (ArgumentNullException ex)
             {
@@ -66,17 +72,20 @@ namespace ArticleJsonFetch.Models
             }
         }
 
-        public void DeserializeQuizDataToJson(ref FileStream stream)
+        public void DeserializeToJson(ref readonly FileStream stream, out QuizData? obj)
         {
+            obj = null;
             if (FileStream.Equals(stream, null)) { return; }
 
             try
             {
-                obj = System.Text.Json.JsonSerializer.Deserialize<QuizData>(stream)!;
-                if (obj != null)
+                this.obj = System.Text.Json.JsonSerializer.Deserialize<QuizData>(stream)!;
+                if (this.obj != null)
                 {
                     isJson = true;
+                    obj = (QuizData)this.obj;
                 }
+                else obj = null;
             }
             catch (ArgumentNullException ex)
             {

@@ -142,7 +142,7 @@ namespace QuizApp.Models
             return Data;
         }
 
-        public static QuizzesOverview GetData(List<Quiz> quizzes)
+        public static QuizzesOverview GetData(ref List<Quiz> quizzes)
         {
             if (quizzes == null) { throw new ArgumentNullException(); }
 
@@ -179,6 +179,8 @@ namespace QuizApp.Models
             //Find and return the quiz model
             QuizData Data = QuizOperations.GetData();
             var QuizChoice = Data.Quizzes.Find(name => name.Title.Equals(match));
+            Data.Dispose();
+
             return QuizChoice;
         }
 
@@ -189,7 +191,9 @@ namespace QuizApp.Models
             //Find and return the quiz model
             QuizData Data = QuizOperations.GetData();
             var QuizChoice = Data.Quizzes.Find(name => name.Title.Equals(quiz));
-            QuizOverview qOverview= new QuizOverview(QuizChoice);
+            Data.Dispose();
+
+            QuizOverview qOverview = new QuizOverview(QuizChoice);
             return qOverview;
         }
     }

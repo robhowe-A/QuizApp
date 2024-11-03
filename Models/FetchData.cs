@@ -10,7 +10,7 @@ namespace QuizApp.Models
             if (path == null) { throw new ArgumentNullException("path"); }
 
             FileStream quizFileData;
-            QuizData Data;
+            QuizData? Data;
 
             try
             {
@@ -19,14 +19,13 @@ namespace QuizApp.Models
 
                 //Call serializer to deserialize the file
                 QuizJsonSerializer quizJsonSerializer = new QuizJsonSerializer();
-                quizJsonSerializer.DeserializeQuizDataToJson(ref quizFileData);
+                quizJsonSerializer.DeserializeToJson(ref quizFileData, out Data);
+                
                 quizFileData.Close();
 
                 //Confirm the serializer output
                 if (!quizJsonSerializer.isJson) return null;
                 
-                Data = (QuizData)quizJsonSerializer.obj;
-
                 return Data;
             }
             catch (ArgumentNullException ex)

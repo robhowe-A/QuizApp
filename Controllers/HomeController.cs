@@ -14,10 +14,14 @@ namespace QuizApp.Controllers
             QuizData Data = QuizOperations.GetData();
 
             //Only the quiz overview information is needed, so refine it
-            QuizzesOverview QuizzesOverviews = QuizOperations.GetData(Data.Quizzes);
-
-            //Quiz asset data is not needed any longer, so dispose of it
+            List<Quiz> quizData = Data.Quizzes;
+            
+            QuizzesOverview QuizzesOverviews = QuizOperations.GetData(ref quizData);
+            
+            //Quiz asset data is not needed, so dispose of it
             Data.Dispose();
+            quizData.Clear();
+            quizData.TrimExcess();
 
             return View(QuizzesOverviews);
         }
