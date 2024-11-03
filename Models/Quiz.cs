@@ -127,16 +127,25 @@ namespace QuizApp.Models
     {
         public static QuizData GetData()
         {
-            FileStream quizFileData = File.Open("./assets/data.json", FileMode.Open, FileAccess.Read, FileShare.None);
-            QuizData Data = System.Text.Json.JsonSerializer.Deserialize<QuizData>
-            (quizFileData)!;
-            quizFileData.Close();
+            const string QuizDataFilePath = "./assets/data.json";
+
+            //Can be any method of getting data
+            FetchData fetchData = new FetchData();
+            QuizData? dataFetch = fetchData.GetFromFileToJson(QuizDataFilePath);
+
+            if (dataFetch == null) throw new InvalidDataException("Invalid data. Check data fetch from file.");
+            
+            //Can validate quiz data, is TODO
+
+            QuizData Data = dataFetch;
 
             return Data;
         }
 
         public static QuizzesOverview GetData(List<Quiz> quizzes)
         {
+            if (quizzes == null) { throw new ArgumentNullException(); }
+
             List<QuizOverview> quizzesOverviews = new List<QuizOverview>();
 
             //Find and return the quiz model
@@ -166,6 +175,7 @@ namespace QuizApp.Models
 
         public static Quiz GetQuiz(string match)
         {
+            if (match == null) { throw new ArgumentNullException(); }
             //Find and return the quiz model
             QuizData Data = QuizOperations.GetData();
             var QuizChoice = Data.Quizzes.Find(name => name.Title.Equals(match));
@@ -174,6 +184,8 @@ namespace QuizApp.Models
 
         public static QuizOverview GetQuiz(Quiz quiz)
         {
+            if (quiz == null) { throw new ArgumentNullException(); }
+
             //Find and return the quiz model
             QuizData Data = QuizOperations.GetData();
             var QuizChoice = Data.Quizzes.Find(name => name.Title.Equals(quiz));

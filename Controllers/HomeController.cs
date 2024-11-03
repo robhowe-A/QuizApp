@@ -7,7 +7,7 @@ namespace QuizApp.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Quiz/Menu
+        // GET: Home/Index
         public ActionResult Index()
         {
             //Start by fetching asset data

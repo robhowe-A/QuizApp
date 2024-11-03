@@ -6,7 +6,7 @@ namespace QuizApp.Controllers
 {
     public class QuizController : Controller
     {
-        // GET: Quiz/Menu
+        // GET: Quiz/
         public ActionResult Index()
         {
             return Redirect("/");
